@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       <TextBox>
         <div className="intro">
           <span>Hello, I am</span>
-          <h1>Seung-Yong Hong</h1>
+          <h1>Hong Seung-Yong</h1>
           <p>&gt; Front-end developer</p>
         </div>
         <div className="desc">
@@ -51,6 +51,11 @@ const TextBox = styled.div`
   left: 10%;
   top: 50%;
   transform: translateY(-50%);
+  @media all and (max-width: 1600px) {
+    left: unset;
+    width: 100%;
+    padding: 0 15px;
+  }
   .intro {
     > span {
       font-size: 18px;
@@ -58,7 +63,7 @@ const TextBox = styled.div`
       line-height: 24px;
     }
     > h1 {
-      font-size: 62px;
+      font-size: 57px;
       line-height: 81px;
       color: ${theme.baseFontColor};
     }

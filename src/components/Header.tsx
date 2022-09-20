@@ -1,40 +1,43 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { theme } from "@styles/theme";
-import { BurgerMenu } from "@styles/svgs/BurgerMenu";
+import Hamburger from "./Hamburger";
+import { useState } from "react";
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const handleMenuClick = () => {
+    setOpen(false);
+  };
   return (
     <Container>
       <Name>
-        <span>seung-young hong</span>
-        <button>
-          <BurgerMenu />
-        </button>
+        <span>hong seung-young</span>
+        <Hamburger open={open} setOpen={setOpen} />
       </Name>
 
-      <div className="menus">
-        <Menu>
+      <MenuWrapper open={open}>
+        <Menu onClick={handleMenuClick}>
           <Link href="/">
             <a>_hello</a>
           </Link>
         </Menu>
-        <Menu>
+        <Menu onClick={handleMenuClick}>
           <Link href="/about">
             <a>_about-me</a>
           </Link>
         </Menu>
-        <Menu>
+        <Menu onClick={handleMenuClick}>
           <Link href="/projects">
             <a>_projects</a>
           </Link>
         </Menu>
-        <Menu className="contact_me">
+        <Menu onClick={handleMenuClick} className="contact_me">
           <Link href="/">
             <a>_contact-me</a>
           </Link>
         </Menu>
-      </div>
+      </MenuWrapper>
     </Container>
   );
 };
@@ -51,6 +54,10 @@ const Menu = styled.div`
   white-space: nowrap;
   cursor: pointer;
   > a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     color: ${theme.descFontColor};
   }
 `;
@@ -60,16 +67,10 @@ const Name = styled(Menu)`
   justify-content: space-between;
   padding: 0 150px 0 22px;
   cursor: auto;
-  > button {
-    display: none;
-  }
   @media all and (max-width: 1600px) {
     flex-grow: 1;
     width: 100%;
-    padding: 0 15px;
-    > button {
-      display: flex;
-    }
+    padding: 0 20px;
   }
 `;
 
@@ -79,10 +80,31 @@ const Container = styled.header`
   width: 100%;
   height: 55px;
   border-bottom: 1px solid ${theme.mainBorderColor};
-  .menus {
-    display: flex;
-    @media all and (max-width: 1600px) {
-      display: none;
+  @media all and (max-width: 1600px) {
+    flex-direction: column;
+  }
+`;
+
+const MenuWrapper = styled.ul<{ open: boolean }>`
+  display: flex;
+  @media all and (max-width: 1600px) {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    display: ${(props) => (props.open ? "flex" : "none")};
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 107px);
+    background-color: ${theme.screenBgColor};
+    z-index: 1;
+    > div {
+      height: 55px;
+      border-bottom: 1px solid ${theme.mainBorderColor};
+      justify-content: flex-start;
+      padding: 0 20px;
+      > a {
+        color: ${theme.baseFontColor};
+      }
     }
   }
 `;
